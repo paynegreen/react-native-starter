@@ -13,7 +13,6 @@ export function PrimaryNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
         gestureEnabled: true,
       }}>
       <Stack.Screen name="welcome" component={WelcomeScreen} />

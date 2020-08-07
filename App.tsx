@@ -8,8 +8,9 @@
  * @format
  */
 
-import React, {Component, useRef} from 'react';
 import './app/utils/ignore-warnings';
+import 'mobx-react-lite/batchingForReactNative';
+import React, {Component, useRef, useState, useEffect} from 'react';
 import {NavigationContainerRef} from '@react-navigation/native';
 import {
   SafeAreaProvider,
@@ -23,6 +24,7 @@ import {
   useNavigationPersistence,
 } from './app/navigation';
 import * as storage from './app/utils/storage';
+import {RootStore, RootStoreProvider, setupRootStore} from './app/models';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -34,6 +36,7 @@ enableScreens();
  */
 const App: Component<{}> = () => {
   const navigationRef = useRef<NavigationContainerRef>();
+  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined);
 
   setRootNavigation(navigationRef);
   useBackButtonHandler(navigationRef, canExit);
@@ -42,14 +45,31 @@ const App: Component<{}> = () => {
     onNavigationStateChange,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
 
+  // Kick off initial async loading actions, like loading fonts and RootStore
+  useEffect(() => {
+    (async () => {
+      setupRootStore().then(setRootStore);
+    })();
+  }, []);
+
+  // Before we show the app, we have to wait for our state to be ready.
+  // In the meantime, don't render anything. This will be the background
+  // color set in native by rootView's background color. You can replace
+  // with your own loading component if you wish.
+  if (!rootStore) {
+    return null;
+  }
+
   return (
-    <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
-      <RootNavigator
-        ref={navigationRef}
-        initialState={initialNavigationState}
-        onStateChange={onNavigationStateChange}
-      />
-    </SafeAreaProvider>
+    <RootStoreProvider value={rootStore}>
+      <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
+        <RootNavigator
+          ref={navigationRef}
+          initialState={initialNavigationState}
+          onStateChange={onNavigationStateChange}
+        />
+      </SafeAreaProvider>
+    </RootStoreProvider>
   );
 };
 
