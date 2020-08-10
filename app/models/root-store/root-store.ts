@@ -11,6 +11,7 @@ export const RootStoreModel = types
            userStore: types.optional(UserStore, () =>
              UserStore.create({
                isAuthenticated: false,
+               onboarded: false,
              }),
            ),
          })

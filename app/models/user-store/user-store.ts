@@ -8,6 +8,7 @@ export const UserStore = types
     identifier: types.optional(types.identifier, 'UserStore'),
     user: types.maybe(User),
     isAuthenticated: types.boolean,
+    onboarded: types.boolean,
   })
   .actions((self) => actions(self))
   .views((self) => views(self));

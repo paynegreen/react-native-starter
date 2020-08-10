@@ -25,6 +25,8 @@ import {
 } from './app/navigation';
 import * as storage from './app/utils/storage';
 import {RootStore, RootStoreProvider, setupRootStore} from './app/models';
+import OnboardingScreen from './app/screens/onboarding-screen/onboarding-screen';
+import {observer} from 'mobx-react-lite';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -34,7 +36,8 @@ enableScreens();
 /**
  * This is the root component of our app.
  */
-const App: Component<{}> = () => {
+const App: Component<{}> = observer(() => {
+  const [onboard, setOnboard] = useState(false);
   const navigationRef = useRef<NavigationContainerRef>();
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined);
 
@@ -60,6 +63,13 @@ const App: Component<{}> = () => {
     return null;
   }
 
+  //Onboard check. If the user hasn't onboarded yet this screens will be
+  //shown to the user when the store is ready
+
+  if (!rootStore.userStore.onboarded) {
+    return <OnboardingScreen store={rootStore.userStore} />;
+  }
+
   return (
     <RootStoreProvider value={rootStore}>
       <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
@@ -71,6 +81,6 @@ const App: Component<{}> = () => {
       </SafeAreaProvider>
     </RootStoreProvider>
   );
-};
+});
 
 export default App;

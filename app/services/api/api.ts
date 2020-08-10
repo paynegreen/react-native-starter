@@ -8,7 +8,7 @@ export class Api {
    */
   // apisauce: ApisauceInstance;
 
-  static config: ApiConfig = {
+  #config: ApiConfig = {
     baseUrl: API_URL,
     headers: {
       'content-type': 'application/json',

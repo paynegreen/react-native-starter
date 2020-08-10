@@ -20,5 +20,8 @@ export const actions = (self: any) => {
       self.isAuthenticated = false;
       self.user = undefined;
     },
+    onboard(value: boolean) {
+      self.onboarded = value;
+    },
   };
 };
