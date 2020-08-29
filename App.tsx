@@ -27,6 +27,7 @@ import * as storage from './app/utils/storage';
 import {RootStore, RootStoreProvider, setupRootStore} from './app/models';
 import OnboardingScreen from './app/screens/onboarding-screen/onboarding-screen';
 import {observer} from 'mobx-react-lite';
+import RNBootSplash from 'react-native-bootsplash';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -51,7 +52,7 @@ const App: Component<{}> = observer(() => {
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
     (async () => {
-      setupRootStore().then(setRootStore);
+      setupRootStore().then(setRootStore).finally(() => RNBootSplash.hide({duration: 250}));
     })();
   }, []);
 
