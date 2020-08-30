@@ -68,7 +68,7 @@ const App: Component<{}> = observer(() => {
   //shown to the user when the store is ready
 
   if (!rootStore.userStore.onboarded) {
-    return <OnboardingScreen store={rootStore.userStore} />;
+    return <OnboardingScreen store={rootStore.userStore} testID="onboard" />;
   }
 
   return (

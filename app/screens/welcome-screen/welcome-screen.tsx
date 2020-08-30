@@ -12,7 +12,7 @@ export const WelcomeScreen: Component = function WelcomeScreen() {
 
   return (
     <View>
-      <Text style={[TEXT, {marginTop: 40}]} onPress={logout}>
+      <Text style={[TEXT, {marginTop: 40}]} onPress={logout} testID="hello">
         Hello
       </Text>
     </View>
