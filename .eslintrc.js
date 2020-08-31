@@ -10,7 +10,7 @@ module.exports = {
         'detox/detox': true,
         jest: true,
         // 'jest/global': true,
-      }
-    }
-  ]
+      },
+    },
+  ],
 };

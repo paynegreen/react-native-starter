@@ -52,7 +52,9 @@ const App: Component<{}> = observer(() => {
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
     (async () => {
-      setupRootStore().then(setRootStore).finally(() => RNBootSplash.hide({duration: 250}));
+      setupRootStore()
+        .then(setRootStore)
+        .finally(() => RNBootSplash.hide({duration: 250}));
     })();
   }, []);
 
