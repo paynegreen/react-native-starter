@@ -12,8 +12,20 @@
     "format:json": "prettier --write '**/*.json'",
     "format:md": "prettier --write '**/*.md'",
     "format:ts": "prettier --write '**/*.ts{,x}'",
-    "ios:test": "detox test -c ios.sim.debug",
-    "android:test": "detox test -c android"
+    "build:ios": "detox build --configuration ios.sim.debug",
+    "build:ios-release": "detox build --configuration ios.sim.release",
+    "build:android-debug": "detox build --configuration android.emu.debug",
+    "build:android-release": "detox build --configuration android.emu.release",
+    "test:ios": "detox test --configuration ios.sim.debug",
+    "test:ios-release": "detox test --configuration ios.sim.release",
+    "test:android-debug": "detox test --configuration android.emu.debug",
+    "test:android-release": "detox test --configuration android.emu.release",
+    "test:android-release-ci": "detox test --configuration android.emu.release -l verbose --headless --record-logs all --take-screenshots all",
+    "e2e:ios": "yarn build:ios && yarn test:ios",
+    "e2e:ios-release": "yarn build:ios-release && yarn test:ios-release",
+    "e2e:android": "yarn build:android-debug && yarn test:android-debug",
+    "e2e:android-release": "yarn build:android-release && yarn test:android-release",
+    "clean:android": "pushd android && ./gradlew clean && popd"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
