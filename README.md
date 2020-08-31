@@ -1,3 +1,5 @@
+![Test](https://github.com/paynegreen/react-native-starter/workflows/Test/badge.svg)
+
 # React Native Starter Kit (wip)
 A quick boilerplate setup for building RN apps using Typescript.
 
